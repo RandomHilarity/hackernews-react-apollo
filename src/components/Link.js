@@ -32,7 +32,13 @@ function Link(props) {
       <div className="flex items-center">
         <span className="gray">{ props.index + 1 }.</span>
         {authToken && (
-          <Mutation mutation={ VOTE_MUTATION } variables={{ linkId: props.link.id }}>
+          <Mutation 
+            mutation={ VOTE_MUTATION }
+            variables={{ linkId: props.link.id }}
+            update={(store, { data: { vote } }) =>
+              props.updateStoreAfterVote(store, vote, props.link.id)
+            }
+          >
             {voteMutation => (
               <div className="ml1 gray f11" onClick={ voteMutation }>▲</div>
             )}  
